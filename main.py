@@ -6,7 +6,7 @@ def get_client():
             result = []
             for client in reader:
                 clean_client = [item.strip() for item in client]
-                if not clean_client():
+                if not clean_client:
                     continue
                 if not clean_client[0]:
                     continue
@@ -14,13 +14,14 @@ def get_client():
                     result.append(clean_client)
             return result
     except FileNotFoundError:
-        return 'Фаил с клиентами пуст'
+      print('Ошибка: файл clients.csv не найден!')
+    return []
 names = get_client()
 
 with open('result.csv', 'w', encoding ='utf-8', newline ='') as file:
     writer = csv.writer(file)
     writer.writerows(names)
 
-print(f'Кол-во клиентов: {len(names) - 1}')
+print(f'Кол-во клиентов: {max(len(names) - 1, 0)}')
 
 
